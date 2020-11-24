@@ -8,7 +8,7 @@ Matt Nicholls <transientvariable@gmail.com>
 :sectanchors: true
 :source-highlighter: prettify
 :toc:
-:toclevels: 3
+:toclevels: 4
 :toc-title: Contents
 
 ifdef::env-github[]
