@@ -1,11 +1,11 @@
 {
-  "id": "https://clould.com/schema/logging/security-log-event/v1",
+  "id": "https://internal-domain/schema/logging/security-log-event/v1",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "description": "Security log event capture information.",
   "type": "object",
   "$comment": "Uses `allOf` property to inherit top-level properties from the `base` schema.",
   "allOf": [{
-    "$ref": "https://clould.com/schema/shared/base/v1"
+    "$ref": "https://internal-domain/schema/shared/base/v1"
   }],
   "$comment": "Custom properties specific to security log events.",
   "properties": {
