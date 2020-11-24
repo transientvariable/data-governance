@@ -129,7 +129,7 @@ The following table lists some of the more widely used data serialization format
 
 ==== Evaluating Field Sets
 
-The following samples demonstrate how event data can be modeled in JSON using the https://www.elastic.co/guide/en/ecs/current/index.html[Elastic Common Schema (ECS)]. It is important to note how context information for an event is represented. ECS defines a top-level field named `event` for capturing context information in nested fields associated with a specific event. Other data modeling standards will typically flatten context data (`eventId`, `eventTime`, etc.) which can potentially increase the complexity in field identification and parsing.
+The following samples demonstrate how event data can be modeled in JSON using the https://www.elastic.co/guide/en/ecs/current/index.html[Elastic Common Schema (ECS)] field set. It is important to note how context information for an event is represented. ECS defines a top-level field named `event` for capturing context information in nested fields associated with a specific event. Other data modeling standards will typically flatten context data (`eventId`, `eventTime`, etc.) which can potentially increase the complexity in field identification and parsing.
 
 Security Log Event::
 --
@@ -365,7 +365,7 @@ _placeholder_
 
 ===== JSON
 
-The following examples demonstrate the _ergonomics_ of creating events in JSON using only the serialization features provided by the programming language's _standard_ libraries. No specialized SDK or logging framework is used.
+The following examples demonstrate the ergonomics of creating events in JSON using only the serialization features provided by the programming language's standard libraries. No specialized SDK or logging framework is used.
 
 [options="header",stripes=even,caption=,autowidth]
 |===
@@ -391,6 +391,19 @@ _placeholder_
 ==== Vendor Provided
 
 _placeholder_
+
+=== Schema Registries
+
+[cols="1,2a", options="header", stripes=even, caption=]
+|===
+|Name |Description
+
+|*https://github.com/snowplow/iglu[Iglu]*
+|Iglu is a machine-readable, open-source schema repository for JSON Schema from the team at Snowplow Analytics. A schema repository (sometimes called a registry) is like npm or Maven or git, but holds data schemas instead of software or code.
+
+|*https://docs.aws.amazon.com/glue/latest/dg/schema-registry.html[AWS Glue Schema Registry]*
+|The AWS Glue Schema Registry is a new feature that allows you to centrally discover, control, and evolve data stream schemas. A schema defines the structure and format of a data record. With AWS Glue Schema Registry, you can manage and enforce schemas on your data streaming applications using convenient integrations with Apache Kafka, Amazon Managed Streaming for Apache Kafka, Amazon Kinesis Data Streams, Amazon Kinesis Data Analytics for Apache Flink, and AWS Lambda.
+|===
 
 === Forwarders/Shippers
 
