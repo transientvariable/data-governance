@@ -40,7 +40,7 @@ _standardize ~[stan-der-dahyz]~_
 
 === Standards
 
-The standards listed here (in no particular order) is by no means a comprehensive list, and are meant solely as a representative sample of how event data is modeled throughout the industry and internally within the enterprise.
+The standards listed here (in no particular order) is by no means a comprehensive list, and are meant solely as a representative sample of how event data is modeled throughout the industry.
 
 ==== Industry
 
