@@ -1,0 +1,51 @@
+= Producing JSON Log Events using Golang
+Matt Nicholls <transientvariable@gmail.com>
+:experimental: true
+:keywords: Observability,Logging,Metrics,Tracing,Standards,Schema
+:icons: font
+:iconfont-cdn: //stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+:sectanchors: true
+:source-highlighter: prettify
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Build and Execution
+
+=== Prerequisites
+
+- The link:https://git-scm.com/[Git] version management tool
+- The link:https://golang.org/dl/[Golang Runtime], version 1.13 or later
+
+=== Assemble the Binary
+
+Fetch the source:
+....
+$ git clone https://github.com/transientvariable/data-governance.git
+....
+
+Navigate to the `data-governance/event-schema/tooling/native/golang/log-event` directory and use the `build` command to assemble the binary:
+....
+$ go build
+....
+
+After the build completes, an executable binary file named `log-event` should exist in the current directory.
+
+=== Run the Executable
+
+Use the `run` command to execute the `log-event` binary.
+
+....
+$ go run log-event
+....
+
+Output similar to the following should be produced:
+
+....
+{"timestamp":"2020-04-20T16:31:38-04:00","labels":{"application":"businessApp","component":"component123"},"message":"Raw text of the original log message would go here if required","cloud":{"region":"us-east-1"},"event":{"id":"b1694bda-d93b-43f6-9f28-d653fbd7ca18","action":"ChangeProfile","dataset":"api.call","kind":"event","category":["application","security"],"created":"2020-04-20T16:31:38-04:00"},"http":{"request":{"id":"00ecf376-2442-4902-a59d-363a5b176e09"}},"log":{"level":"info"},"recipient":{"account":{"id":"12345678A"}},"source":{"ip":"204.63.40.11","domain":"abc.com"},"user_agent":{"name":"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)"}}
+....

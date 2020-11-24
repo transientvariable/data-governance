@@ -1,0 +1,44 @@
+{
+  "id": "https:/.com/schema/shared/destination/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields about the destination side of a network connection, used with the `source` field.",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "description": "The destination domain.",
+      "type": "string",
+      "format": "idn-hostname",
+      "default": "",
+      "examples": ["abc.com"]
+    },
+    "ip": {
+      "description": "The IPv4 or IPv6 address of the destination.",
+      "type": "string",
+      "oneOf": [
+        { "format": "ipv4" },
+        { "format": "ipv6" }
+      ],
+      "default": "",
+      "examples": ["204.63.40.11"]
+    },
+    "mac": {
+      "description": "The MAC address of the destination.",
+      "type": "string",
+      "pattern": "^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$",
+      "default": "",
+      "examples": [ "58:ef:68:14:50:fc" ]
+    },
+    "port": {
+      "description": "The destination port.",
+      "type": "integer",
+      "default": 0,
+      "examples": [443]
+    }
+  },
+  "examples": [{
+    "domain": "abc.com",
+    "ip": "204.63.40.11",
+    "mac": "58:ef:68:14:50:fc",
+    "port": 443
+  }]
+}

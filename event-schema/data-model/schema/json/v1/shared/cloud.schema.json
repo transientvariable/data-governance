@@ -1,0 +1,144 @@
+{
+  "id": "https://internal-domain/schema/shared/cloud/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields related to the cloud or infrastructure that an event originates from.",
+  "type": "object",
+  "properties": {
+    "availability_zone": {
+      "description": "Availability zone in which this host is running.",
+      "type": "string",
+      "default": "",
+      "examples": ["us-east-1c"]
+    },
+    "provider": {
+      "description": "Name of the cloud provider.",
+      "type": "string",
+      "default": "",
+      "examples": ["aws"]
+    },
+    "region": {
+      "description": "Region in which this host is running.",
+      "type": "string",
+      "default": "",
+      "examples": ["us-east-1"]
+    },
+    "account": {
+      "description": "The cloud account fields.",
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "description": "The cloud account or organization id.",
+          "type": "string",
+          "default": "",
+          "examples": ["427884659784"]
+        },
+        "name": {
+          "description": "The cloud account name.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        }
+      },
+      "examples": [{
+        "id": "",
+        "name": ""
+      }]
+    },
+    "instance": {
+      "description": "Cloud instance fields.",
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "description": "Instance ID of the host machine.",
+          "type": "string",
+          "default": "",
+          "examples": ["i-06843cee9d0dbebaa"]
+        },
+        "vpc": {
+          "description": "AWS specific Virtual Private Cloud (VPC) information for an instance.",
+          "type": "object",
+          "default": {},
+          "additionalProperties": true,
+          "properties": {
+            "id": {
+              "description": "The instance VPC ID.",
+              "type": "string",
+              "default": "",
+              "examples": [""]
+            },
+            "cidr": {
+              "description": "The instance VPC CIDR.",
+              "type": "string",
+              "default": "",
+              "examples": [""]
+            },
+            "name": {
+              "description": "The instance VPC name.",
+              "type": "string",
+              "default": "",
+              "examples": [""]
+            },
+            "type": {
+              "description": "The instance VPC type.",
+              "type": "string",
+              "default": "",
+              "examples": [""]
+            }
+          },
+          "examples": [{
+            "id": "vpc-0b59d16d",
+            "cidr": "10.34.8.0/22",
+            "name": "Critical Stack PaaS - Dev",
+            "type": "dev"
+          }]
+        },
+        "security_groups": {
+          "description": "The AWS security groups for an instance.",
+          "type": "array",
+          "default": [],
+          "uniqueItems": true,
+          "examples": [[
+            "Enterprise-AllInstances-SG-19.03",
+            "CoreServicesAccess-SG-19.03"
+          ]]
+        }
+      },
+      "examples": [{
+        "id": "",
+        "security_groups": [],
+        "vpc": {
+          "name": "",
+          "cidr": "",
+          "id": "",
+          "type": ""
+        }
+      }]
+    }
+  },
+  "examples": [{
+    "availability_zone": "us-east-1c",
+    "region": "us-east-1",
+    "account": {
+      "id": "427884659784",
+      "name": "elastic-dev"
+    },
+    "instance": {
+      "id": "i-06843cee9d0dbebaa",
+      "vpc": {
+        "id": "vpc-0b59d16d",
+        "cidr": "10.34.8.0/22",
+        "name": "Critical Stack PaaS - Dev",
+        "type": "dev"
+      },
+      "security_groups": [
+        "Enterprise-AllInstances-SG-19.03",
+        "CoreServicesAccess-SG-19.03"
+      ]
+    },
+    "provider": "aws"
+  }],
+}

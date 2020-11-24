@@ -1,0 +1,44 @@
+{
+  "id": "https://internal-domain/schema/shared/source/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Describes details about the source of a packet/event, snd typically used in conjunction with the `destination` field.",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "description": "The source domain.",
+      "type": "string",
+      "format": "idn-hostname",
+      "default": "",
+      "examples": ["abc.com"]
+    },
+    "ip": {
+      "description": "The IPv4 or IPv6 address of the source.",
+      "type": "string",
+      "oneOf": [
+        { "format": "ipv4" },
+        { "format": "ipv6" }
+      ],
+      "default": "",
+      "examples": ["204.63.40.11"]
+    },
+    "mac": {
+      "description": "The MAC address of the source.",
+      "type": "string",
+      "pattern": "^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$",
+      "default": "",
+      "examples": [ "58:ef:68:14:50:fc" ]
+    },
+    "port": {
+      "description": "The source port.",
+      "type": "integer",
+      "default": 0,
+      "examples": [443]
+    }
+  },
+  "examples": [{
+    "domain": "abc.com",
+    "ip": "204.63.40.11",
+    "mac": "58:ef:68:14:50:fc",
+    "port": 443
+  }]
+}

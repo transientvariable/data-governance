@@ -1,0 +1,34 @@
+{
+  "id": "https://internal-domain/schema/shared/hash/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields for representing different hash algorithms and their values.",
+  "type": "object",
+  "properties": {
+    "md5": {
+      "description": "MD5 hash.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{32}$",
+      "default": "",
+      "examples": ["37a6259cc0c1dae299a7866489dff0bd"]
+    },
+    "sha1": {
+      "description": "SHA1 hash.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{5,40}$",
+      "default": "",
+      "examples": ["2be88ca4242c76e8253ac62474851065032d6833"]
+    },
+    "sha256": {
+      "description": "SHA256 hash.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$",
+      "default": "",
+      "examples": ["74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"]
+    }
+  },
+  "examples": [{
+    "md5": "37a6259cc0c1dae299a7866489dff0bd",
+    "sha1": "2be88ca4242c76e8253ac62474851065032d6833",
+    "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+  }]
+}

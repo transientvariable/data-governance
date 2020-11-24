@@ -1,0 +1,62 @@
+{
+  "id": "https://clould.com/schema/logging/security-log-event/v1",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Security log event capture information.",
+  "type": "object",
+  "$comment": "Uses `allOf` property to inherit top-level properties from the `base` schema.",
+  "allOf": [{
+    "$ref": "https://clould.com/schema/shared/base/v1"
+  }],
+  "$comment": "Custom properties specific to security log events.",
+  "properties": {
+
+  },
+  "$comment": "Other properties related to security log events.",
+  "http":        { "$ref": "https://internal-domain/schema/shared/http/v1" },
+  "url":         { "$ref": "https://internal-domain/schema/shared/url/v1" },
+  "user_agent":  { "$ref": "https://internal-domain/schema/sahred/user-agent/v1" },
+  "examples": [{
+    "timestamp": "2020-01-16T08:05:34.853Z",
+    "labels": {
+      "application": "",
+      "component": "",
+      "service": ""
+    },
+    "event": {
+      "id": "84576854-664b-4b8f-aa72-87b0a90331e5",
+      "action": "UpdateUser",
+      "dataset": "api.call",
+      "kind": "event",
+      "category": ["application", "security"],
+      "severity": "",
+      "start": "2020-01-16T08:05:34.853Z",
+      "end": "2016-01-16T08:05:40.000Z",
+      "outcome": "success"
+    },
+    "http": {
+      "request": {
+        "method": "post",
+        "body": {
+          "content": "Hello World"
+        }
+      },
+      "response": {
+        "status_code": 200
+      },
+      "version": "1.1"
+    },
+    "trace": {
+      "id": "b918021c-7c5d-4c20-b168-46dfa70b653f",
+      "transaction": {
+        "id": "00f067aa0ba902b7"
+      }
+    },
+    "url": {
+      "path": "/update/user/1234"
+    },
+    "user_agent": {
+      "original": "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)",
+      "version": "9.0"
+    }
+  }]
+}

@@ -1,0 +1,142 @@
+{
+  "@timestamp": "",
+  "labels": {
+    "application": "",
+    "component": "",
+    "service": ""
+  },
+  "message": "",
+  "event": {
+    "action": "",
+    "category": [""],
+    "dataset": "",
+    "end": "",
+    "id": "",
+    "kind": "",
+    "module": "",
+    "original": "",
+    "outcome": "",
+    "severity": "",
+    "start": ""
+  },
+  "cloud": {
+    "availability_zone": "",
+    "provider": "",
+    "region": "",
+    "account": {
+      "id": "",
+      "name": ""
+    },
+    "instance": {
+      "id": "",
+      "vpc": {
+        "cidr": "",
+        "id": "",
+        "name": "",
+        "type": ""
+      },
+      "security_groups": ""
+    }
+  },
+  "client": {
+    "domain": "",
+    "ip": "",
+    "mac": ""
+  },
+  "container": {
+    "id": "",
+    "image": {
+      "name": ""
+    },
+    "name": ""
+  },
+  "destination": {
+    "domain": "",
+    "ip": "",
+    "mac": "",
+    "port": 0
+  },
+  "file": {
+    "name": ""
+  },
+  "hash": {
+    "md5": "",
+    "sha1": "",
+    "sha256": ""
+  },
+  "host": {
+    "hostname": "",
+    "ip": "",
+    "mac": "",
+    "name": ""
+  },
+  "http": {
+    "request": {
+      "method": "",
+      "body": {
+        "content": ""
+      }
+    },
+    "response": {
+      "status_code": 0,
+      "body": {
+        "content": ""
+      }
+    },
+    "version": ""
+  },
+  "log": {
+    "file": {
+      "line": "",
+      "name": "",
+      "offset": "",
+      "path": ""
+    },
+    "level": "",
+    "original": ""
+  },
+  "process": {
+    "name": "",
+    "pid": ""
+  },
+  "server": {
+    "domain": "",
+    "hostname": "",
+    "ip": "",
+    "mac": "",
+    "port": 0
+  },
+  "source": {
+    "domain": "",
+    "hostname": "",
+    "ip": "",
+    "mac": "",
+    "port": ""
+  },
+  "trace": {
+    "id": "",
+    "transaction": {
+      "id": ""
+    }
+  },
+  "url": {
+    "full": "",
+    "original": "",
+    "path": "",
+    "query": "",
+    "schema": ""
+  },
+  "user": {
+    "eid": "",
+    "domain": "",
+    "email": "",
+    "name": "",
+    "sid": ""
+  },
+  "user_agent": {
+    "device": "",
+    "name": "",
+    "original": "",
+    "version": ""
+  }
+}

@@ -1,0 +1,58 @@
+= Producing JSON Log Events using Java
+Matt Nicholls <transientvariable@gmail.com>
+:experimental: true
+:keywords: Observability,Logging,Metrics,Tracing,Standards,Schema
+:icons: font
+:iconfont-cdn: //stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+:sectanchors: true
+:source-highlighter: prettify
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Build and Execution
+
+=== Prerequisites
+
+- The link:https://git-scm.com/[Git] version management tool
+- The link:https://jdk.java.net/14/[Java Development Kit (JDK)], version 14 or later
+- The link:https://gradle.org/releases/[Gradle build automation tool], version 6.3 or later
+
+=== Assemble JAR File
+
+Fetch the source:
+....
+$ git clone https://github.com/transientvariable/data-governance.git
+....
+
+Navigate to the `data-governance/event-schema/tooling/native/java/log-event` directory and use the Gradle `build` task to assemble the JAR file:
+....
+$ ./gradlew build
+....
+
+After the build completed, the final build artifact will be located in the `../build/libs` directory.
+
+=== Run the Executable
+
+Use the Gradle `run` command to execute the final build artifact.
+
+....
+$ ./gradlew run
+....
+
+Output similar to the following should be produced:
+
+....
+...
+
+> Task :run
+{"timestamp":"2020-04-20T17:52:58.639+0000","labels":{"component":"component123","application":"businessApp"},"message":"Raw text of the original log message would go here if required","cloud":{"region":"us-east-1"},"event":{"id":"b1694bda-d93b-43f6-9f28-d653fbd7ca18","action":"ChangeProfile","dataset":"api.call","kind":"event","category":["application","security"],"created":"2020-04-20T17:52:58.640+0000"},"http":{"request":{"id":"00ecf376-2442-4902-a59d-363a5b176e09"}},"log":{"level":"info"},"recipient":{"account":{"id":"123456789"}},"source":{"ip":"204.63.40.11","domain":"abc.com"},"user_agent":{"name":"Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)"}}
+
+BUILD SUCCESSFUL in 1s
+3 actionable tasks: 1 executed, 2 up-to-date
+....

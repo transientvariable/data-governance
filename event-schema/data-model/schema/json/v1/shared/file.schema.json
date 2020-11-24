@@ -1,0 +1,17 @@
+{
+  "id": "https://internal-domain/schema/shared/file/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields that provide details about the affected file associated with the event or metric.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "Name of the file including the extension, without the directory.",
+      "type": "string",
+      "default": "",
+      "examples": ["example.png"]
+    }
+  },
+  "examples": [{
+    "name": "example.png"
+  }]
+}

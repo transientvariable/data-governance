@@ -1,0 +1,36 @@
+{
+  "id": "https://internal-domain/schema/shared/trace/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields related to distributed tracing.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique identifier of the trace.",
+      "type": "string",
+      "default": {},
+      "examples": [ "4bf92f3577b34da6a3ce929d0e0e4736" ]
+    },
+    "transaction": {
+      "description": "Defines fields associated with distributed tracing.",
+      "type": "object",
+      "required": [ "id" ],
+      "default": {},
+      "examples": [
+        { "id": "00f067aa0ba902b7" }
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "description": "Unique identifier of the transaction.",
+          "type": "string",
+          "default": "",
+          "examples": [ "00f067aa0ba902b7" ]
+        }
+      }
+    }
+  },
+  "examples": [{
+    "id": "4bf92f3577b34da6a3ce929d0e0e4736",
+    "transaction": { "id": "00f067aa0ba902b7" }
+  }]
+}

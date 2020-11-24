@@ -1,0 +1,46 @@
+{
+  "id": "https://internal-domain/schema/shared/user/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields that describe information about the user that is relevant to an event.",
+  "type": "object",
+  "properties": {
+    "eid": {
+      "description": "The user ID number.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    },
+    "domain": {
+      "description": "Name of the directory the user is a member of.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    },
+    "email": {
+      "description": "The user email address",
+      "type": "string",
+      "format": "idn-email",
+      "default": "",
+      "examples": [""]
+    },
+    "name": {
+      "description": "Short name or login of the user.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    },
+    "sid": {
+      "description": "The security identifier for the user, typically a Windows user.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    }
+  },
+  "examples": [{
+    "sid": "",
+    "name": "",
+    "eid": "",
+    "domain": "",
+    "email": ""
+  }]
+}

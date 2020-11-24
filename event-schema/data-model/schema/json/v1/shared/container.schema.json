@@ -1,0 +1,44 @@
+{
+  "id": "https://internal-domain/schema/shared/container/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields for meta information about a specific container that is the source of information.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique container id.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    },
+    "image": {
+      "description": "Container image fields.",
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "description": "Name of the image the container was built on.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        }
+      },
+      "examples": [{
+        "name": ""
+      }],
+    },
+    "name": {
+      "description": "Container name.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    }
+  },
+  "examples": [{
+    "id": "",
+    "image": {
+      "name": ""
+    },
+    "name": ""
+  }]
+}

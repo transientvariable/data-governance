@@ -1,0 +1,123 @@
+{
+  "id": "https://internal-domain/schema/shared/event/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Provides context information about the log or metric event itself.",
+  "type": "object",
+  "required": ["id", "action", "dataset", "kind", "category", "created"],
+  "properties": {
+    "id": {
+      "description": "Unique ID to describe the event.",
+      "type": "string",
+      "default": "",
+      "examples": ["b1694bda-d93b-43f6-9f28-d653fbd7ca18"]
+    },
+    "action": {
+      "description": "The action captured by the event.",
+      "type": "string",
+      "default": "",
+      "examples": ["user-password-change"]
+    },
+    "category": {
+      "description": "Event category. The second categorization field in the hierarchy.",
+      "type": "array",
+      "default": [],
+      "items": {
+        "enum": [
+          "authentication",
+          "application",
+          "database",
+          "driver",
+          "file",
+          "host",
+          "iam",
+          "instrusion_detection",
+          "malware",
+          "network",
+          "package",
+          "process",
+          "security",
+          "web"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "examples": [
+        ["application", "security"]
+      ],
+    },
+    "created": {
+      "description": "Time when the event was first read by an agent or pipeline.",
+      "type": "string",
+      "format": "date-time",
+      "default": "",
+      "examples": ["2016-05-23T08:05:34.857Z"]
+    },
+    "dataset": {
+      "description": "Name of the dataset.",
+      "type": "string",
+      "default": "",
+      "examples": ["api.call"]
+    },
+    "end": {
+      "description": "An explanation about the purpose of this instance.",
+      "type": "string",
+      "format": "date-time",
+      "default": "",
+      "examples": ["2019-06-23T08:07:34.857Z"]
+    },
+    "kind": {
+      "description": "The kind of the event. The highest categorization field in the hierarchy.",
+      "enum": [
+        "alert",
+        "event",
+        "metric",
+        "pipeline_error",
+        "signal",
+        "state"
+      ],
+      "examples": ["event"]
+    },
+    "module": {
+      "description": "Name of the module this data is coming from.",
+      "type": "string",
+      "default": "",
+      "examples": ["apache"]
+    },
+    "original": {
+      "description": "Raw text message of entire event. Used to demonstrate log integrity.",
+      "type": "string",
+      "default": "",
+      "examples": ["Sep 19 08:26:10 host CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 dst=2.1.2.2spt=1232"]
+    },
+    "outcome": {
+      "description": "Denotes whether the event represents a success or a failure from the perspective of the entity that produced the event.",
+      "enum": [
+        "failure",
+        "success",
+        "unknown"
+      ],
+      "examples": ["success"]
+    },
+    "severity": {
+      "description": "Numeric severity of the event.",
+      "type": "integer",
+      "default": "",
+      "examples": [1]
+    },
+    "start": {
+      "description": "The date when the event started or when the activity was first observed.",
+      "type": "string",
+      "format": "date-time",
+      "default": "",
+      "examples": ["2019-06-23T08:06:34.857Z"]
+    }
+  },
+  "examples": [{
+    "category": ["application", "security"],
+    "id": "b1694bda-d93b-43f6-9f28-d653fbd7ca18",
+    "dataset": "api.call",
+    "action": "user-password-change",
+    "created": "2016-05-23T08:05:34.857Z",
+    "kind": "event"
+  }]
+}

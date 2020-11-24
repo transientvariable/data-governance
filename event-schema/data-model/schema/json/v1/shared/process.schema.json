@@ -1,0 +1,24 @@
+{
+  "id": "https://internal-domain/schema/shared/process/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields for representing information about a process.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The process name.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    },
+    "pid": {
+      "description": "The process pid.",
+      "type": "integer",
+      "default": "",
+      "examples": [4242]
+    }
+  },
+  "examples": [{
+    "pid": "",
+    "name": ""
+  }]
+}

@@ -1,0 +1,73 @@
+{
+  "id": "https://internal-domain/schema/shared/log/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Details about the event's logging mechanism or logging transport.",
+  "type": "object",
+  "properties": {
+    "file": {
+      "description": "The file associated with a log source.",
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "line": {
+          "description": "The line number of the file containing the source code which originated the log event.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        },
+        "name": {
+          "description": "The name of the file containing the source code which originated the log event.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        },
+        "offset": {
+          "description": "Offset of the log event.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        },
+        "path": {
+          "description": "Full path to the log file this event came from.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        }
+      },
+      "examples": [{
+        "offset": "",
+        "line": "",
+        "name": "",
+        "path": ""
+      }],
+    },
+    "level": {
+      "description": "Log level of the log event.",
+      "enum": [
+        "info",
+        "debug",
+        "error",
+        "trace",
+        "warn"
+      ],
+      "examples": ["info"]
+    },
+    "original": {
+      "description": "Original log message with light interpretation only (encoding, newlines).",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    }
+  },
+  "examples": [{
+    "file": {
+      "name": "",
+      "path": "",
+      "offset": "",
+      "line": ""
+    },
+    "level": "",
+    "original": ""
+  }]
+}

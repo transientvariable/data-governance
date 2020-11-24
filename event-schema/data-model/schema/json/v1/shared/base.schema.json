@@ -1,0 +1,30 @@
+{
+  "id": "https://internal-domain/schema/shared/base/v1",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Defines the top-level field set shared across all event types.",
+  "type": "object",
+  "required": ["timestamp", "labels", "event", "trace"],
+  "properties": {
+    "timestamp": {
+      "description": "Date/time when the event originated.",
+      "type": "string",
+      "examples": ["2016-05-23T08:05:34.853Z"]
+    },
+    "labels": {
+      "description": "Custom key/value pairs.",
+      "type": "object",
+      "examples": [{
+        "application": "foo-bar",
+        "component": "authentication",
+        "env": "production"
+      }]
+    },
+    "message": {
+      "description": "Log message optimized for viewing in a log viewer.",
+      "type": "string",
+      "examples": ["Hello World"]
+    }
+  },
+  "event": { "$ref": "https://internal-domain/schema/shared/event/v1" },
+  "trace": { "$ref": "https://internal-domain/schema/shared/trace/v1" }
+}

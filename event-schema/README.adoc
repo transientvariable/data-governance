@@ -1,0 +1,422 @@
+= *Event Schema*: You know, for events...
+Matt Nicholls <transientvariable@gmail.com>
+:experimental: true
+:keywords: Observability,Logging,Metrics,Tracing,Standards,Schema,Harmonize,Normalize
+:icons: font
+:iconfont-cdn: //stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css
+:imagesdir: images
+:sectanchors: true
+:source-highlighter: prettify
+:toc:
+:toclevels: 3
+:toc-title: Contents
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+{nbsp} +
+
+.verbs
+[.text-center]
+****
+_harmonize ~[hahr-muh-nahyz]~_
+_normalize ~[nawr-muh-lahyz]~_
+_schematize ~[skee-muh-tahyz]~_
+_standardize ~[stan-der-dahyz]~_
+****
+
+== Goals
+
+* Define a vendor neutral standard for normalizing the _shape_ of event data.
+* Provide a means for identifying data quality issues in event data emitted by various sources (e.g. applications) across the enterprise.
+* Provide tooling *as needed* to optimise the developer experience for emitting event data in the course of application development.
+
+== Modeling
+
+=== Standards
+
+The standards listed here (in no particular order) is by no means a comprehensive list, and are meant solely as a representative sample of how event data is modeled throughout the industry and internally within the enterprise.
+
+==== Industry
+
+[cols="1,2a", options="header", stripes=even, caption=]
+|===
+|Name |Description
+
+|*https://www.secef.net/secef/idmef/idmef-introduction/[Intrusion Detection Message Exchange Format (IDMEF)]*
+|The purpose of the Intrusion Detection Message Exchange Format (IDMEF) is to define data formats and exchange procedures for sharing information of interest to intrusion detection and response systems and to the management systems that may need to interact with them.
+
+|*https://docs.splunk.com/Documentation/CIM/4.15.0/User/Overview[Splunk CIM]*
+|Add-on for Splunk that helps to *normalize* data to match a common standard, using the same field names and event tags for equivalent events from different sources or vendors. The CIM acts as a search-time schema ("schema-on-the-fly") to allow you to define relationships in the event data while leaving the raw machine data intact.
+
+|*https://www.elastic.co/guide/en/ecs/master/index.html[Elastic Common Schema (ECS)]*
+|The goal of ECS is to enable and encourage users of Elasticsearch to *normalize* their event data, so that they can better analyze, visualize, and correlate the data represented in their events. ECS has been scoped to accommodate a wide variety of events, spanning:
+
+* *Event sources*: whether the source of your event is an Elastic product, a third- party product, or a custom application built by your organization.
+* *Ingestion architectures*: whether the ingestion path for your events includes Beats processors, Logstash, Elasticsearch ingest node, all of the above, or none of the above.
+* *Consumers*: whether consumed by API, Kibana queries, dashboards, apps, or other means.
+
+|*https://github.com/open-telemetry/oteps/blob/master/text/logs/0092-logs-vision.md[OpenTelemetry Logs Vision]*
+|Incubating proposal for log support in OpenTelemetry.
+
+|*https://cloud.google.com/logging/docs/reference/v2/rest/v2/LogEntry[Google Cloud Logging]*
+|Cloud Logging is part of the Google Cloud's operations suite suite of products in Google Cloud. It includes storage for logs, a user interface called the Logs Viewer, and an API to manage logs programmatically. Logging lets you read and write log entries, search and query your logs, export your logs, and create logs-based metrics.
+
+|*https://marketplace.microfocus.com/arcsight/content/common-event-format-guide[ArcSight CEF]*
+|The CEF standard format is an open log management standard that simplifies log management. CEF allows third parties to create their own device schemas that are compatible with a standard that is used industry-wide for *normalizing* security events. Technology companies and customers can use the standardized CEF format to facilitate data collection and aggregation, for later analysis by an enterprise management system.
+|===
+
+{nbsp} +
+
+=== Schemas as Contracts
+
+In order to effectively communitcate events between producers and consumers, a serialization format is required to establish a _contract_ for the _shape_ of the event data, or more simply, a _schema_.
+
+{nbsp} +
+
+image::event_data_processing.png[Using Schemas for Event Data Processing]
+
+[NOTE]
+====
+.Schema Registries
+Schemas will typically need to be stored in a shared location that is accessible to all development teams. One option might be AWS S3. A better option would be to use a schema registry like *https://github.com/snowplow/iglu[Iglu]*.
+====
+
+{nbsp} +
+{nbsp} +
+
+The following table lists some of the more widely used data serialization formats that can be used for defining schemas.
+
+.Data Serialization Formats
+[cols="1,2a", options="header", stripes=even, caption=]
+|===
+|Name |Description
+
+|*https://avro.apache.org/docs/current/[Apache Avro]*
+|A data serialization system that provides:
+
+* Rich data structures.
+* A compact, fast, binary data format.
+* A container file, to store persistent data.
+* Remote procedure call (RPC).
+* Simple integration with dynamic languages. Code generation is not required to read or write data files nor to use or implement RPC protocols. Code generation as an optional optimization, only worth implementing for statically typed languages.
+
+|*https://thrift.apache.org/[Apache Thrift]*
+|Scalable cross-language services development, combines a software stack with a code generation engine to build services that work efficiently and seamlessly between C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, Cocoa, JavaScript, Node.js, Smalltalk, OCaml and Delphi and other languages.
+
+|*https://capnproto.org/[Cap’n Proto]*
+|An insanely fast data interchange format and capability-based RPC system. Think JSON, except binary. Or think Protocol Buffers, except faster. In fact, in benchmarks, Cap’n Proto is INFINITY TIMES faster than Protocol Buffers.
+
+|*https://json-schema.org/specification.html[JSON Schema]*
+|A vocabulary that allows you to *annotate* and *validate* JSON documents.
+
+* Describes your existing data format(s).
+* Provides clear human- and machine- readable documentation.
+* Validates data which is useful for:
+** Automated testing.
+** Ensuring quality of client submitted data.
+
+|*https://developers.google.com/protocol-buffers[Protocol buffers]*
+|Language-neutral, platform-neutral, extensible mechanism for serializing structured data – think XML, but smaller, faster, and simpler. You define how you want your data to be structured once, then you can use special generated source code to easily write and read your structured data to and from a variety of data streams and using a variety of languages.
+|===
+
+=== Modeling Event Data Using JSON Schema
+
+==== Evaluating Field Sets
+
+The following samples demonstrate how event data can be modeled in JSON using the https://www.elastic.co/guide/en/ecs/current/index.html[Elastic Common Schema (ECS)]. It is important to note how context information for an event is represented. ECS defines a top-level field named `event` for capturing context information in nested fields associated with a specific event. Other data modeling standards will typically flatten context data (`eventId`, `eventTime`, etc.) which can potentially increase the complexity in field identification and parsing.
+
+Security Log Event::
+--
+[source,json]
+----
+{
+  "timestamp": "2020-02-03T23:46:51.123456789Z",
+  "cloud": {
+    "region": "us-east-1"
+  },
+  "event": {
+    "id": "b1694bda-d93b-43f6-9f28-d653fbd7ca18",
+    "action": "ChangeProfile",
+    "dataset": "api.call",
+    "kind": "event",
+    "category": ["application", "security"],
+    "created": "2020-03-01T14:35:38Z"
+  },
+  "http": {
+    "request": {
+      "method": "get",
+      "body": {
+        "content": "; DROP TABLE Users"
+      }
+    },
+    "response": {
+      "status_code": 418,
+      "body": {
+        "content": "I'm a teapot"
+      }
+    }
+  },
+  "log": {
+    "level": "error"
+  },
+  "labels": {
+    "application": "businessApp",
+    "component": "component123"
+  },
+  "message": "Raw text of the original log message would go here if required",
+  "source": {
+    "ip": "204.63.40.11",
+    "domain": "abc.com"
+  },
+  "user_agent": {
+    "original": "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)",
+    "version": "9.0"
+  }
+}
+----
+--
+
+==== Defining the Schema
+
+The following https://json-schema.org/specification.html[JSON Schema] definitions were derived from the https://www.elastic.co/guide/en/ecs/current/index.html[Elastic Common Schema (ECS)] field set and demonstrate how the implicit _shape_ of event data can be explicitly defined with type information and constraints.
+
+[NOTE]
+====
+.Fields
+A simpler view of the fields defined in the schemas in this section can be viewed in the following documents:
+
+* link:data-model/fields.json[Field Set JSON]
+* link:data-model/fields-flat.txt[Field Set Flat]
+====
+
+===== Shared
+
+Schema definitions that serve as the building blocks for composing other schemas for specific uses cases.
+
+[cols="1,2a", options="header", stripes=even, caption=]
+|===
+|Schema |Description
+
+|*link:data-model/schema/json/v1/shared/base.schema.json[Base]*
+|Defines the top-level field set shared across all event types. This schema should be included in all other concrete schemas using JSON Schema's https://json-schema.org/understanding-json-schema/reference/combining.html#allof[`allOf`] keyword.
+
+|*link:data-model/schema/json/v1/shared/client.schema.json[Client]*
+|Fields that describe details about the client side of a network connection, used with server.
+
+|*link:data-model/schema/json/v1/shared/cloud.schema.json[Cloud]*
+|Fields related to the cloud or infrastructure that an event originates from.
+
+|*link:data-model/schema/json/v1/shared/container.schema.json[Container]*
+|Fields for meta information about a specific container that is the source of information.
+
+|*link:data-model/schema/json/v1/shared/destination.schema.json[Destination]*
+|Fields about the destination side of a network connection, used with the `source` field.
+
+|*link:data-model/schema/json/v1/shared/event.schema.json[Event]*
+|Fields used for context information about the log or metric event itself.
+
+A log is defined as an event containing details of something that happened. Log events must include the time at which the thing happened. Examples of log events include a process starting on a host, a network packet being sent from a source to a destination, or a network connection between a client and a server being initiated or closed.
+
+|*link:data-model/schema/json/v1/shared/file.schema.json[File]*
+|Fields that provide details about the affected file associated with the event or metric.
+
+File objects can be associated with host events, network events, and/or file events (e.g., those produced by File Integrity Monitoring [FIM] products or services).
+
+|*link:data-model/schema/json/v1/shared/hash.schema.json[Hash]*
+|Fields for representing different hash algorithms and their values.
+
+|*link:data-model/schema/json/v1/shared/http.schema.json[HTTP]*
+|Fields related to HTTP activity.
+
+|*link:data-model/schema/json/v1/shared/log.schema.json[Log]*
+|Details about the event's logging mechanism or logging transport.
+
+The `log.\*` fields are typically populated with details about the logging mechanism used to create and/or transport the event. For example, syslog details belong under `log.syslog.*`.
+
+The details specific to your event source are typically not logged under `log.*`, but rather in `event.*` or in other ECS fields.
+
+|*link:data-model/schema/json/v1/shared/process.schema.json[Process]*
+|Fields for representing information about a process.
+
+|*link:data-model/schema/json/v1/shared/server.schema.json[Server]*
+|Fields that describe details about the system acting as the server in a network event, and are usually populated in conjunction with `client` fields.
+
+Server fields are generally not populated for packet-level events.
+
+|*link:data-model/schema/json/v1/shared/source.schema.json[Source]*
+|Describes details about the source of a packet/event, snd typically used in conjunction with the `destination` field.
+
+|*link:data-model/schema/json/v1/shared/trace.schema.json[Trace]*
+|Distributed tracing makes it possible to analyze performance throughout a microservice architecture all in one view.
+
+This is accomplished by tracing all of the requests - from the initial web request in the front-end service - to queries made through multiple back-end services.
+
+|*link:data-model/schema/json/v1/shared/url.schema.json[URL]*
+|Fields for representing Uniforma Resource Locators (URLs).
+
+|*link:data-model/schema/json/v1/shared/user-agent.schema.json[User Agent]*
+|Fields to describe a browser the `user_agent` string which typically originates from an HTTP client such as a web browser or CLI application.
+
+|*link:data-model/schema/json/v1/shared/user.schema.json[User]*
+|Fields that describe information about the user that is relevant to an event.
+|===
+
+===== Logging
+
+Composite schema definitions for capturing log event data.
+
+[cols="1,2a", options="header", stripes=even, caption=]
+|===
+|Schema |Description
+
+|*link:data-model/schema/json/v1/logging/security-log-event.schema.json[Security Log Event]*
+|Security log event capture information.
+|===
+
+==== Handling Schema Evolution
+
+With the schema defined, a mechanism is needed by which to associate event data with the schema that was used to produce it so that consumers do not have to rely on an _implicit_ data model to process it. A way to accomplish this would be to use https://snowplowanalytics.com/blog/2014/05/15/introducing-self-describing-jsons/[Self-describing JSON].
+
+Here is an example of applying the self-describing JSON concept to a hypothectical web application security log event:
+
+.Self-describing Web Application Security Log Event
+[source,json]
+----
+{
+  "schema": "internal-domain/schema/logging/security-log-event/v1", <1>
+  "data": { <2>
+    "timestamp": "2016-05-23T08:05:34.853Z",
+    "event": {
+      "id": "b1694bda-d93b-43f6-9f28-d653fbd7ca18",
+      "action": "ChangeProfile",
+      "dataset": "api.call",
+      "kind": "event",
+      "category": ["application", "security"],
+      "created": "2016-05-23T07:00:00.000Z"
+    },
+    "http": {
+      "request": {
+        "method": "get",
+        "body": {
+          "content": "; DROP TABLE Users"
+        }
+      },
+      "response": {
+        "status_code": 418,
+        "body": {
+          "content": "I'm a teapot"
+        }
+      }
+    },
+    "log": {
+      "level": "error"
+    },
+    "message": "I'm a teapot"
+  }
+}
+----
+<1> `schema` is a string which identifies the schema used to serialize an event. +
+
+* If consumed from a data source that contains heterogeneous events, can be used to filter on only the events a consumer is interested in.
+* Provides the serialization format that consumers can use to deserialize the contents of the `data` field.
+* Versioning is implicitly encoded in each event.
+
+<2> `data` contains the JSON data representing the raw event data.
+
+== Governance
+
+[NOTE]
+====
+.Continuous Data Governance with Spring Cloud Data Flow
+Presentation at SpingOne 2018 by https://enfuse.io/[Enfuse.io] on data governance using Blockchain https://youtu.be/pEe-p_VSrFE?t=977[Continuous Data Governance with Spring Cloud Data Flow].
+====
+
+=== Validation
+
+==== Data Type (Syntax)
+
+_placeholder_
+
+==== Contextual (Semantic)
+
+_placeholder_
+
+=== Existing Frameworks
+
+[cols="1,2a",options="header",stripes=even,caption=,autowidth]
+|===
+|Link |Description
+
+|*https://atlas.apache.org/[Apache Atlas]*
+|Atlas is a scalable and extensible set of core foundational governance services – enabling enterprises to effectively and efficiently meet their compliance requirements within Hadoop and allows integration with the whole enterprise data ecosystem.
+|===
+
+== Tooling
+
+=== Developver Experience (DX)
+
+==== Native: No Specialized SDK or Logging Framework
+
+===== JSON
+
+The following examples demonstrate the _ergonomics_ of creating events in JSON using only the serialization features provided by the programming language's _standard_ libraries. No specialized SDK or logging framework is used.
+
+[options="header",stripes=even,caption=,autowidth]
+|===
+|Link |Implementation Language
+
+|*link:tooling/native/java/log-event[Producing JSON Log Events using Java]*
+|Java
+
+|*link:tooling/native/golang/log-event[Producing JSON Log Events using Golang]*
+|Golang
+
+|*link:https://github.com/transientvariable/ecs-mapping/tree/master/eventlog/python[Mapping NXLog Data to ECS Using Python]*
+|Python
+
+|*link:https://github.com/transientvariable/ecs-mapping/tree/master/eventlog/logstash[Mapping NXLog Data to ECS Using Ruby (via Logstash)]*
+|Ruby
+|===
+
+==== SDK
+
+_placeholder_
+
+==== Vendor Provided
+
+_placeholder_
+
+=== Forwarders/Shippers
+
+[cols="1,2a", options="header", stripes=even, caption=]
+|===
+|Name |Description
+
+|*https://vector.dev/[Vector]*
+|Vector is a lightweight, ultra-fast, https://github.com/timberio/vector[open-source] tool for building observability pipelines. Compared to Logstash and friends, Vector https://vector.dev/#performance[improves throughput by ~10X while significanly reducing CPU and memory usage].
+
+*Principles*
+{nbsp} +
+
+* *Reliability First.* - Built in Rust, Vector's primary design goal is reliability.
+* *One Tool. All Data.* - One simple tool gets your logs, metrics, and traces (coming soon) from A to B.
+* *Single Responsibility.* - Vector is a data router, it does not plan to become a distributed processing framework.
+
+|*https://www.elastic.co/guide/en/beats/filebeat/current/filebeat-overview.html[Filebeat]*
+|Filebeat is a lightweight shipper for forwarding and centralizing log data. Installed as an agent on your servers, Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
+
+|*https://fluentbit.io/FluentBit[FluentBit]*
+|Fluent Bit is an open source and multi-platform Log Processor and Forwarder which allows you to collect data/logs from different sources, unify and send them to multiple destinations. It's fully compatible with Docker and Kubernetes environments.
+
+|*https://docs.splunk.com/Documentation/Forwarder/8.0.3/Forwarder/Abouttheuniversalforwarder[SplunkUF]*
+|The universal forwarder collects data from a data source or another forwarder and sends it to a forwarder or a Splunk deployment.
+
+|*https://nxlog.co/[NXLog]*
+|NXLog can process event logs from thousands of different sources with volumes over 100,000 events per second. It can accept event logs over TCP, TLS/SSL, and UDP; from files and databases; and in Syslog, Windows EventLog, and JSON formats. NXLog can also perform advanced processing on log messages, such as rewriting, correlating, alerting, pattern matching, scheduling, and log file rotation. It supports prioritized processing of certain log messages, and can buffer messages on disk or in memory to work around problems with input latency or network congestion. After processing, NXLog can store or forward event logs in any of many supported formats. Inputs, outputs, log formats, and complex processing are implemented with a modular architecture and a powerful configuration language.
+|===

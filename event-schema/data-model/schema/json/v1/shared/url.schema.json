@@ -1,0 +1,49 @@
+{
+  "id": "https://internal-domain/schema/shared/url/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields for representing Uniforma Resource Locators (URLs).",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "description": "Domain of the url.",
+      "type": "string",
+      "default": "",
+      "examples": ["www.elastic.co"]
+    },
+    "full": {
+      "description": "The full unparsed URL.",
+      "type": "string",
+      "default": "",
+      "examples": ["https://www.elastic.co:443/search?q=elasticsearch#top"]
+    },
+    "original": {
+      "description": "Unmodified original URL as seen in the event source.",
+      "type": "string",
+      "default": "",
+      "examples": ["https://www.elastic.co:443/search?q=elasticsearch#top", "/search?q=elasticsearch"]
+    },
+    "path": {
+      "description": "Path of the request, such as `/search`.",
+      "type": "string",
+      "default": "",
+      "examples": ["/search"]
+    },
+    "query": {
+      "description": "Query string of the request.",
+      "type": "string",
+      "default": "",
+      "examples": ["q=elasticsearch"]
+    },
+    "scheme": {
+      "description": "Scheme of the url.",
+      "type": "string",
+      "default": "",
+      "examples": ["https"]
+    }
+  },
+  "examples": [{
+    "full": "https://www.elastic.co:443/search?q=elasticsearch#top",
+    "original": "/search?q=elasticsearch",
+    "path": "/search"
+  }]
+}

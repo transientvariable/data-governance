@@ -1,0 +1,103 @@
+{
+  "id": "https://internal-domain/schema/shared/http/v1",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Fields related to HTTP activity. Use the `url` field set to store the url of the request.",
+  "type": "object",
+  "properties": {
+    "request": {
+      "description": "The HTTP request.",
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "method": {
+          "description": "The HTTP request method.",
+          "type": "string",
+          "default": "",
+          "examples": [""]
+        },
+        "body": {
+          "description": "The HTTP request body.",
+          "type": "object",
+          "default": {},
+          "additionalProperties": true,
+          "properties": {
+            "content": {
+              "description": "The full HTTP request body.",
+              "type": "string",
+              "default": "",
+              "examples": [""]
+            }
+          },
+          "examples": [{
+            "content": ""
+          }],
+        }
+      },
+      "examples": [{
+        "body": {
+          "content": ""
+        },
+        "method": ""
+      }]
+    },
+    "response": {
+      "description": "The HTTP response.",
+      "type": "object",
+      "default": {},
+      "additionalProperties": true,
+      "properties": {
+        "status_code": {
+          "description": "The HTTP response status code.",
+          "type": "integer",
+          "default": 0,
+          "examples": [418]
+        },
+        "body": {
+          "description": "The HTTP response.",
+          "type": "object",
+          "default": {},
+          "additionalProperties": true,
+          "properties": {
+            "content": {
+              "description": "The full HTTP response body.",
+              "type": "string",
+              "default": "",
+              "examples": [""]
+            }
+          },
+          "examples": [{
+            "content": ""
+          }]
+        }
+      },
+      "examples": [{
+        "body": {
+          "content": ""
+        },
+        "status_code": 418
+      }]
+    },
+    "version": {
+      "description": "The HTTP version.",
+      "type": "string",
+      "default": "",
+      "examples": [""]
+    }
+  },
+  "examples": [{
+    "version": "",
+    "request": {
+      "body": {
+        "content": ""
+      },
+      "method": ""
+    },
+    "response": {
+      "body": {
+        "content": ""
+      },
+      "status_code": 418
+    }
+  }]
+}
